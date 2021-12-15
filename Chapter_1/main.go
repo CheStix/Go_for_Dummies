@@ -1,5 +1,8 @@
 package main
 
+import "fmt"
+
 func main() {
-	$END$
+	fmt.Println("Hello, world!")
+	displayTime()
 }
