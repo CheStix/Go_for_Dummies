@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+	"reflect"
+	"strconv"
+	"time"
 	"unicode/utf8"
 )
 
@@ -30,6 +33,8 @@ anything new"
 	str2 := "こんにちは世界"
 	str3 := "\u4f60\u597d\uff0c\u4e16\u754c"
 
+	start := time.Now()
+
 	fmt.Println(num1)    // 5
 	fmt.Println(num2)    // 0
 	fmt.Println(num3)    // 0
@@ -43,4 +48,45 @@ anything new"
 	fmt.Println(str1, len(str1), utf8.RuneCountInString(str1))
 	fmt.Println(str1, len(str2), utf8.RuneCountInString(str2))
 	fmt.Println(str1, len(str3), utf8.RuneCountInString(str3))
+
+	fmt.Printf("%T\n", start)                  // time.Time
+	fmt.Println(reflect.TypeOf(start))         // time.Time
+	fmt.Println(reflect.ValueOf(start).Kind()) //struct
+
+	var input string
+	fmt.Print("Please enter your age: ")
+	fmt.Scanf("%s", &input)
+	age, err := strconv.Atoi(input) //convert string to int
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		s := fmt.Sprintf("%s, your age is %d", firstName, age)
+		fmt.Println(s)
+	}
+
+	b, err := strconv.ParseBool("t")
+	fmt.Println(b)        // true
+	fmt.Println(err)      // <nil>
+	fmt.Printf("%T\n", b) // bool
+
+	f, err := strconv.ParseFloat("3.4545", 64)
+	fmt.Println(f)        // 3.4545
+	fmt.Println(err)      // <nil>
+	fmt.Printf("%T\n", f) // float64
+
+	i, err := strconv.ParseInt("-18.44", 10, 64)
+	fmt.Println(i)        // 0
+	fmt.Println(err)      // strconv.ParseInt: parsing "-18.44": invalid syntax
+	fmt.Printf("%T\n", i) // int64
+
+	u1, err := strconv.ParseUint("18", 10, 64)
+	fmt.Println(u1)        // 18
+	fmt.Println(err)       // <nil>
+	fmt.Printf("%T\n", u1) // int64
+
+	u2, err := strconv.ParseUint("-18", 10, 64)
+	fmt.Println(u2)        // 0
+	fmt.Println(err)       // strconv.ParseInt: parsing "-18": invalid syntax
+	fmt.Printf("%T\n", u2) // int64
+
 }
