@@ -11,6 +11,12 @@ func snowing() bool {
 	fmt.Println("Check if it is snowing now...")
 	return true
 }
+
+func doSomething() (int, bool) {
+	//...
+	//just an example of some return values
+	return 5, false
+}
 func main() {
 	num := 6
 	condition := num%2 == 1
@@ -24,4 +30,9 @@ func main() {
 		fmt.Println("Stay indoors!")
 	}
 
+	if v, err := doSomething(); !err {
+		fmt.Println(v)
+	} else {
+		fmt.Println("handle the error")
+	}
 }
