@@ -38,6 +38,14 @@ func addNums(total int, nums ...int) int {
 	return total
 }
 
+func fib() func() int {
+	f1, f2 := 0, 1
+	return func() int {
+		f1, f2 = f2, f1+f2
+		return f1
+	}
+}
+
 func main() {
 	displayDate("Mon 2006-01-02 15:04:05 MST", "Current Date and Time:")
 	displayDate("15:04:05 Mon 02.01.2006 MST", "Current Time and Date:")
@@ -54,4 +62,15 @@ func main() {
 	fmt.Println(o, e)
 
 	fmt.Println(addNums(0, 1, 2, 3, 4, 5, 6))
+
+	var i func() int
+	i = func() int {
+		return 5
+	}
+	fmt.Println(i())
+
+	gen := fib()
+	for i := 0; i < 10; i++ {
+		fmt.Println(gen())
+	}
 }
