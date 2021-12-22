@@ -56,4 +56,18 @@ func main() {
 	for pos, char := range "こんにちは世界" {
 		fmt.Printf("%c at byte location %d\n", char, pos)
 	}
+
+Outerloop:
+	for i := 1; i <= 5; i++ {
+		for j := 1; j <= 5; j++ {
+			if i == 2 {
+				continue Outerloop
+			}
+			if i == 4 {
+				break Outerloop
+			}
+			fmt.Printf("%d * %d = %d\n", i, j, i*j)
+		}
+		fmt.Println("------------")
+	}
 }
