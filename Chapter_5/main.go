@@ -46,6 +46,15 @@ func fib() func() int {
 	}
 }
 
+func filter(arr []int, cond func(int) bool) []int {
+	result := []int{}
+	for _, v := range arr {
+		if cond(v) {
+			result = append(result, v)
+		}
+	}
+	return result
+}
 func main() {
 	displayDate("Mon 2006-01-02 15:04:05 MST", "Current Date and Time:")
 	displayDate("15:04:05 Mon 02.01.2006 MST", "Current Time and Date:")
@@ -73,4 +82,15 @@ func main() {
 	for i := 0; i < 10; i++ {
 		fmt.Println(gen())
 	}
+
+	a := []int{1, 2, 3, 4, 5}
+	evens := filter(a, func(val int) bool {
+		return val%2 == 0
+	})
+
+	fmt.Println(evens)
+	evens = filter(a, func(val int) bool {
+		return val > 3
+	})
+	fmt.Println(evens)
 }
