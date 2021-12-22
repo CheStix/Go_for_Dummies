@@ -30,4 +30,21 @@ func main() {
 			break
 		}
 	}
+
+	var OS [3]string
+	OS[0] = "iOS"
+	OS[1] = "Android"
+	OS[2] = "Windows"
+	for i, v := range OS {
+		fmt.Println(i, v)
+	}
+	for _, v := range OS {
+		fmt.Println(v)
+	}
+	for i, _ := range OS {
+		fmt.Println(i)
+	}
+	for i := range OS {
+		fmt.Println(i)
+	}
 }
