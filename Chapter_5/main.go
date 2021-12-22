@@ -30,6 +30,14 @@ func countOddEven(s string) (int, int) {
 	return odds, evens
 }
 
+func addNums(total int, nums ...int) int {
+	fmt.Printf("%T ", nums)
+	for _, n := range nums {
+		total += n
+	}
+	return total
+}
+
 func main() {
 	displayDate("Mon 2006-01-02 15:04:05 MST", "Current Date and Time:")
 	displayDate("15:04:05 Mon 02.01.2006 MST", "Current Time and Date:")
@@ -44,4 +52,6 @@ func main() {
 
 	o, e := countOddEven("1234567")
 	fmt.Println(o, e)
+
+	fmt.Println(addNums(0, 1, 2, 3, 4, 5, 6))
 }
