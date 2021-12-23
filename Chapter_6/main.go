@@ -30,4 +30,24 @@ func main() {
 		}
 	}
 	fmt.Println(cube)
+
+	s := make([]int, 2, 5)
+	fmt.Println(s)
+	fmt.Println(len(s), cap(s))
+
+	t := []int{1, 2, 3, 4, 5}
+	t = append(t, 6, 7, 8)
+	fmt.Println(t)
+	fmt.Println(len(t), cap(t))
+	t = append(t, 9, 10)
+	fmt.Println(t)
+	fmt.Println(len(t), cap(t))
+	u := t
+	u[9] = 100
+	t = append(t, 11)
+	fmt.Println(t)
+	fmt.Println(len(t), cap(t))
+	fmt.Println(u)
+	fmt.Println(len(u), cap(u))
+
 }
