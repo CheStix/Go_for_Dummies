@@ -50,4 +50,15 @@ func main() {
 	fmt.Println(u)
 	fmt.Println(len(u), cap(u))
 
+	c := [3]string{"iOS", "Android", "Windows"}
+	fmt.Println(c[0:2])
+	fmt.Println(c[:2])
+	fmt.Println(c[1:])
+	fmt.Println(c[:])
+	t = t[2:4]
+	fmt.Println(t)
+	fmt.Println(len(t), cap(t))
+	t = t[1:3]
+	fmt.Println(t)
+	fmt.Println(len(t), cap(t))
 }
