@@ -30,4 +30,14 @@ func main() {
 
 	pt4 := newPoint(7.8, 8.9, 9.0)
 	fmt.Println(pt4)
+	pt5 := pt4
+	pt5.x = 0
+	fmt.Println(pt4, pt5)
+	pt6 := *pt4 // copy
+	pt6.z = 0
+	fmt.Println(pt4, pt6)
+	pt7 := pt6  // copy
+	pt8 := &pt7 //reference
+	pt8.y = 0
+	fmt.Println(pt8, pt7)
 }
