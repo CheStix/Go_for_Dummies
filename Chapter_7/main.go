@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 type point struct {
 	x float32
@@ -8,6 +11,21 @@ type point struct {
 	z float32
 }
 
+// a copy of the point struct is passed into the length() method
+func (p point) length() float64 {
+	return math.Sqrt(
+		math.Pow(float64(p.x), 2) +
+			math.Pow(float64(p.y), 2) +
+			math.Pow(float64(p.z), 2))
+}
+
+// a reference to the struct is passed into it instead of a copy
+
+func (p *point) move(deltax, deltay, deltaz float32) {
+	p.x += deltax
+	p.y += deltay
+	p.z += deltaz
+}
 func newPoint(x, y, z float32) *point {
 	p := point{x: x, y: y, z: z}
 	return &p
@@ -40,4 +58,9 @@ func main() {
 	pt8 := &pt7 //reference
 	pt8.y = 0
 	fmt.Println(pt8, pt7)
+
+	fmt.Println(pt4.length())
+	fmt.Println(pt4)
+	pt4.move(0.1, 0.1, 0.1)
+	fmt.Println(*pt4)
 }
