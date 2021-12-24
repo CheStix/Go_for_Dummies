@@ -8,6 +8,11 @@ type point struct {
 	z float32
 }
 
+func newPoint(x, y, z float32) *point {
+	p := point{x: x, y: y, z: z}
+	return &p
+}
+
 func main() {
 	var pt1 point
 	pt1.x = 3.1
@@ -21,6 +26,8 @@ func main() {
 		z: 6.9,
 	}
 	pt3 := point{1.2, 2.3, 3.4}
-
 	fmt.Println(pt2, pt3)
+
+	pt4 := newPoint(7.8, 8.9, 9.0)
+	fmt.Println(pt4)
 }
