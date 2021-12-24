@@ -1,9 +1,30 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 )
+
+func insert(orig []int, index int, value int) ([]int, error) {
+	if index < 0 {
+		return nil, errors.New("Index cannot be less than 0")
+	}
+	if index > len(orig) {
+		return append(orig, value), nil
+	}
+	orig = append(orig[:index+1], orig[index:]...)
+	orig[index] = value
+	return orig, nil
+}
+
+func delete(orig []int, index int) ([]int, error) {
+	if index < 0 || index >= len(orig) {
+		return nil, errors.New("Index out of range")
+	}
+	orig = append(orig[:index], orig[index+1:]...)
+	return orig, nil
+}
 
 func main() {
 	var nums1 [5]int // an array of int (5 elements)
@@ -61,4 +82,39 @@ func main() {
 	t = t[1:3]
 	fmt.Println(t)
 	fmt.Println(len(t), cap(t))
+
+	for i, v := range t {
+		fmt.Println(i, v)
+
+	}
+
+	nums4 := nums1
+	nums4[0] = 1
+	fmt.Println(nums1, nums4)
+
+	v := make([]int, len(t))
+	copy(v, t)
+	fmt.Println(t, v)
+
+	v = make([]int, 1, 5)
+	copy(v, t)
+	fmt.Println(t, v)
+
+	v = make([]int, 10)
+	copy(v, t)
+	fmt.Println(t, v)
+
+	t = []int{1, 2, 3, 4, 5}
+	t, err := insert(t, 2, 9)
+	if err == nil {
+		fmt.Println(t)
+	} else {
+		fmt.Println(err)
+	}
+	t, err = delete(t, 2)
+	if err == nil {
+		fmt.Println(t)
+	} else {
+		fmt.Println(err)
+	}
 }
