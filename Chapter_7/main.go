@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/google/go-cmp/cmp"
 	"math"
 )
 
@@ -9,6 +10,13 @@ type point struct {
 	x float32
 	y float32
 	z float32
+}
+
+type ExPoint struct {
+	X    float32
+	Y    float32
+	Z    float32
+	Name []string
 }
 
 // a copy of the point struct is passed into the length() method
@@ -29,6 +37,15 @@ func (p *point) move(deltax, deltay, deltaz float32) {
 func newPoint(x, y, z float32) *point {
 	p := point{x: x, y: y, z: z}
 	return &p
+}
+
+func (p1 ExPoint) Equal(p2 ExPoint) bool {
+	if p1.X == p2.X &&
+		p1.Y == p2.Y &&
+		p1.Z == p2.Z {
+		return true
+	}
+	return false
 }
 
 func main() {
@@ -63,4 +80,13 @@ func main() {
 	fmt.Println(pt4)
 	pt4.move(0.1, 0.1, 0.1)
 	fmt.Println(*pt4)
+
+	fmt.Println(pt1 == pt2) //false
+	fmt.Println(pt4 == pt5) //true
+
+	expt1 := ExPoint{5.6, 3.8, 6.9, []string{"expt1"}}
+	expt2 := ExPoint{5.6, 3.8, 6.9, []string{"expt"}}
+	expt3 := ExPoint{5.6, 3.8, 6.9, []string{"expt"}}
+	fmt.Println(cmp.Equal(expt1, expt2)) //true
+	fmt.Println(cmp.Equal(expt3, expt2)) //true
 }
