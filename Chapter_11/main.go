@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"sync"
+	"sync/atomic"
 	"time"
 )
 
@@ -14,26 +15,20 @@ func say(s string, times int) {
 	}
 }
 
-var balance int
+var balance int64
 var mutex = &sync.Mutex{}
 
 func credit() {
-	for i := 0; i < 5; i++ {
-		mutex.Lock()
-		balance += 100
+	for i := 0; i < 10; i++ {
+		atomic.AddInt64(&balance, 100)
 		time.Sleep(time.Duration(rand.Intn(100)) * time.Millisecond)
-		fmt.Println("After crediting, balance is", balance)
-		mutex.Unlock()
 	}
 }
 
 func debit() {
 	for i := 0; i < 5; i++ {
-		mutex.Lock()
-		balance -= 100
+		atomic.AddInt64(&balance, -100)
 		time.Sleep(time.Duration(rand.Intn(100)) * time.Millisecond)
-		fmt.Println("After debiting, balance is", balance)
-		mutex.Unlock()
 	}
 }
 
@@ -46,4 +41,5 @@ func main() {
 	go credit()
 	go debit()
 	fmt.Scanln()
+	fmt.Println(balance)
 }
