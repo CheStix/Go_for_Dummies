@@ -58,6 +58,15 @@ func calculateArea(listOfShapes []Shape) {
 	}
 }
 
+type Person struct {
+	FirstName string
+	LastName  string
+	Age       int
+}
+
+func (p Person) String() string {
+	return fmt.Sprintf("%v %v (%d years old)", p.FirstName, p.LastName, p.Age)
+}
 func main() {
 	s := DigitString("123456789")
 	fmt.Println(s.CountOddEven())
@@ -72,4 +81,7 @@ func main() {
 
 	shapes := []Shape{c1, s1, t1}
 	calculateArea(shapes)
+
+	me := Person{"Wei-meng", "Lee", 34}
+	fmt.Println(me)
 }
