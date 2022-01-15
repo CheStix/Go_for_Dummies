@@ -18,16 +18,24 @@ func say(s string, times int) {
 var balance int64
 var mutex = &sync.Mutex{}
 
-func credit() {
+func credit(wg *sync.WaitGroup) {
+	defer wg.Done()
 	for i := 0; i < 10; i++ {
+		mutex.Lock()
 		atomic.AddInt64(&balance, 100)
+		fmt.Println("After crediting, balance is", balance)
+		mutex.Unlock()
 		time.Sleep(time.Duration(rand.Intn(100)) * time.Millisecond)
 	}
 }
 
-func debit() {
+func debit(wg *sync.WaitGroup) {
+	defer wg.Done()
 	for i := 0; i < 5; i++ {
+		mutex.Lock()
 		atomic.AddInt64(&balance, -100)
+		fmt.Println("After debiting, balance is", balance)
+		mutex.Unlock()
 		time.Sleep(time.Duration(rand.Intn(100)) * time.Millisecond)
 	}
 }
@@ -35,11 +43,16 @@ func debit() {
 func main() {
 	//go say("Hello", 3)
 	//go say("World", 2)
+	var wg sync.WaitGroup
 
 	balance = 200
 	fmt.Println("Initial balance is", balance)
-	go credit()
-	go debit()
-	fmt.Scanln()
-	fmt.Println(balance)
+
+	wg.Add(1)
+	go credit(&wg)
+	wg.Add(1)
+	go debit(&wg)
+
+	wg.Wait()
+	fmt.Println("Final balance is", balance)
 }
