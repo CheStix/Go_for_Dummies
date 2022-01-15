@@ -45,6 +45,9 @@ func (c Circle) Area() float64 {
 func (c Circle) Circumference() float64 {
 	return 2 * math.Pi * c.radius
 }
+func (c Circle) String() string {
+	return fmt.Sprintf("Area is %v, Circumference is %v", c.Area(), c.Circumference())
+}
 func (s Square) Area() float64 {
 	return math.Pow(s.length, 2)
 }
@@ -84,4 +87,6 @@ func main() {
 
 	me := Person{"Wei-meng", "Lee", 34}
 	fmt.Println(me)
+
+	fmt.Println(c1)
 }
