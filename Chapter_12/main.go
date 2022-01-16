@@ -28,6 +28,15 @@ func sum(s []int, c chan int) {
 	c <- sum
 }
 
+func fib(n int, c chan int) {
+	a, b := 1, 1
+	for i := 0; i < n; i++ {
+		c <- a
+		a, b = b, a+b
+		time.Sleep(time.Second)
+	}
+	close(c)
+}
 func main() {
 	ch := make(chan string)
 	go sendData(ch)
@@ -59,5 +68,10 @@ func main() {
 		i += 1
 	}
 	fmt.Println("Total:", total)
-	fmt.Scanln()
+
+	ch1 := make(chan int)
+	go fib(10, ch1)
+	for i := range ch1 {
+		fmt.Println(i)
+	}
 }
