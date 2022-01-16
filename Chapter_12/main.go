@@ -26,6 +26,7 @@ func sum(s []int, c chan int) {
 		sum += v
 	}
 	c <- sum
+	fmt.Println("Done and can continue to do other work")
 }
 
 func fib(n int, c chan int) {
@@ -58,7 +59,7 @@ func main() {
 		s = append(s, rand.Intn(100))
 	}
 
-	c := make(chan int)
+	c := make(chan int, 5) //buffered channel of length 5
 	partSize := 2
 	parts := sliceSize / partSize
 	i := 0
@@ -69,6 +70,7 @@ func main() {
 
 	i = 0
 	total := 0
+	time.Sleep(time.Second)
 	for i < parts {
 		partialSum := <-c //read from channel
 		fmt.Println("Partial sum:", partialSum)
