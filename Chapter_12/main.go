@@ -33,6 +33,14 @@ func fib(n int, c chan int) {
 	for i := 0; i < n; i++ {
 		c <- a
 		a, b = b, a+b
+		time.Sleep(2 * time.Second)
+	}
+	close(c)
+}
+
+func counter(n int, c chan int) {
+	for i := 0; i < n; i++ {
+		c <- i
 		time.Sleep(time.Second)
 	}
 	close(c)
@@ -70,8 +78,47 @@ func main() {
 	fmt.Println("Total:", total)
 
 	ch1 := make(chan int)
+	ch2 := make(chan int)
+
 	go fib(10, ch1)
-	for i := range ch1 {
-		fmt.Println(i)
-	}
+	go counter(10, ch2)
+
+	ch1Closed := false
+	ch2Closed := false
+
+	go func() {
+		for {
+			select {
+			case n, ok := <-ch1:
+				if !ok {
+					//channel closed and drained
+					ch1Closed = true
+					if ch1Closed && ch2Closed {
+						return
+					}
+				} else {
+					fmt.Println("fib()", n)
+				}
+			case m, ok := <-ch2:
+				if !ok {
+					ch2Closed = true
+					if ch1Closed && ch2Closed {
+						return
+					}
+				} else {
+					fmt.Println("counter()", m)
+				}
+
+			}
+		}
+	}()
+
+	//for i := range ch1 {
+	//	fmt.Println(i)
+	//}
+	//for i:=range ch2 {
+	//	fmt.Println(i)
+	//}
+	fmt.Println("Do something")
+	fmt.Scanln()
 }
