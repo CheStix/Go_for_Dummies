@@ -13,6 +13,15 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 func allcourses(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "List of all courses")
+
+	kv := r.URL.Query()
+	for k, v := range kv {
+		fmt.Println(k, v)
+	}
+
+	if val, ok := kv["country"]; ok {
+		fmt.Println(val[0])
+	}
 }
 
 func course(w http.ResponseWriter, r *http.Request) {
