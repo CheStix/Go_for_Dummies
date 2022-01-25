@@ -52,6 +52,17 @@ func EditRecord(db *sql.DB, ID string, Detail string) {
 		}
 	}
 }
+
+func DeleteRecord(db *sql.DB, ID string) {
+	result, err := db.Exec("DELETE FROM Course WHERE ID=?", ID)
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		if count, err := result.RowsAffected(); err == nil {
+			fmt.Println(count, "row(s) affected")
+		}
+	}
+}
 func main() {
 	// use mysql as driverName and a valid DSN
 	db, err := sql.Open("mysql", "admin:admin@tcp(127.0.0.1:3306)/CoursesDB")
@@ -61,7 +72,8 @@ func main() {
 	} else {
 		fmt.Println("Database object created")
 		// InsertRecord(db, "IOS101", "iOS Programming")
-		EditRecord(db, "IOS101", "SwiftUI Programming")
+		// EditRecord(db, "IOS101", "SwiftUI Programming")
+		DeleteRecord(db, "IOS101")
 		GetRecords(db)
 	}
 	// defer the close till after the main function has finished executing
