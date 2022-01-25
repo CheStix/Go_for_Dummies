@@ -12,7 +12,7 @@ type Course struct {
 	Detail string
 }
 
-func getResults(db *sql.DB) {
+func GetRecords(db *sql.DB) {
 	results, err := db.Query("SELECT * FROM Course")
 	if err != nil {
 		panic(err.Error())
@@ -30,6 +30,17 @@ func getResults(db *sql.DB) {
 	}
 }
 
+func InsertRecord(db *sql.DB, ID string, Detail string) {
+	// use parameterized SQL statement
+	result, err := db.Exec("INSERT INTO Course VALUE (?,?)", ID, Detail)
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		if count, err := result.RowsAffected(); err == nil {
+			fmt.Println(count, "row(s) affected")
+		}
+	}
+}
 func main() {
 	// use mysql as driverName and a valid DSN
 	db, err := sql.Open("mysql", "admin:admin@tcp(127.0.0.1:3306)/CoursesDB")
@@ -38,7 +49,8 @@ func main() {
 		panic(err.Error())
 	} else {
 		fmt.Println("Database object created")
-		getResults(db)
+		InsertRecord(db, "IOS101", "iOS Programming")
+		GetRecords(db)
 	}
 	// defer the close till after the main function has finished executing
 	defer db.Close()
