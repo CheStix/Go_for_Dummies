@@ -3,6 +3,7 @@ module Go_Programming_Language_For_Dummies
 go 1.17
 
 require (
+	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/google/go-cmp v0.5.6 // indirect
 	github.com/hackebrot/turtle v0.2.0 // indirect
 	github.com/yuin/goldmark v1.4.1 // indirect
