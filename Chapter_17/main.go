@@ -41,6 +41,17 @@ func InsertRecord(db *sql.DB, ID string, Detail string) {
 		}
 	}
 }
+
+func EditRecord(db *sql.DB, ID string, Detail string) {
+	result, err := db.Exec("UPDATE Course SET Detail=? WHERE ID=?", Detail, ID)
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		if count, err := result.RowsAffected(); err == nil {
+			fmt.Println(count, "row(s) affected")
+		}
+	}
+}
 func main() {
 	// use mysql as driverName and a valid DSN
 	db, err := sql.Open("mysql", "admin:admin@tcp(127.0.0.1:3306)/CoursesDB")
@@ -49,7 +60,8 @@ func main() {
 		panic(err.Error())
 	} else {
 		fmt.Println("Database object created")
-		InsertRecord(db, "IOS101", "iOS Programming")
+		// InsertRecord(db, "IOS101", "iOS Programming")
+		EditRecord(db, "IOS101", "SwiftUI Programming")
 		GetRecords(db)
 	}
 	// defer the close till after the main function has finished executing
